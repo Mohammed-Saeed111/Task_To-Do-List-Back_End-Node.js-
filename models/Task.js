@@ -1,5 +1,4 @@
-const { default: mongoose } = require('mongoose');
-const mogoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
     title:
@@ -10,6 +9,7 @@ const taskSchema = new mongoose.Schema({
     isCompleted: 
     {
         type : Boolean,
+        // Automatically false (User doesn't send it)
         default: false,
     },
     email: 
@@ -22,12 +22,18 @@ const taskSchema = new mongoose.Schema({
     },
     user: 
     {
+          // ده نوع خاص في MongoDB بيخزن الـ ID الخاص بدوكيومنت تاني
+
         type: mongoose.Schema.Types.ObjectId,
+        // بيربط الحقل ده بموديل اسمه "User"
+        // وده بيسمحلي أستخدم populate عشان أجيب بيانات اليوزر المرتبط بالتاسك
         ref: "User",
     },
     createdAt:
     {
         type: Date,
+        // لو المستخدم مبعتش تاريخ
+       // MongoDB هتحط التاريخ والوقت الحالي تلقائيًا
         default: Date.now,
     }
 })

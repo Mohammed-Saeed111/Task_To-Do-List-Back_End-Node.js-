@@ -10,17 +10,11 @@ const app = express();
 app.use(express.json());
 
 //import routes/taskRoutes.js
-const taskoutes = require('./routes/taskRoutes');
+const TaskRoute = require('./routes/taskRoutes');
 
 //use taskRoutes
 
-app.use("/api/tasks", taskoutes)
-
-
-
-
-
-
+app.use("/api/tasks", TaskRoute)
 
 
 
@@ -33,6 +27,7 @@ async function connectDB() {
         console.log ("The database is connected to mongoDB");
     }catch (error){
         console.log("ERROR connecting to MongoDB: ", error.message);
+        process.exit(1);
 
     }
 }
@@ -43,7 +38,7 @@ connectDB();
 const PORT =  process.env.PORT || 3000;
 app.listen(PORT,() => {
     console.log(`Server is running on port is: ${PORT}`);
-})
+});
 
 
 

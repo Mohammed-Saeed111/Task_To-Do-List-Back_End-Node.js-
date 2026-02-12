@@ -11,19 +11,20 @@ router.post("/", async (req, res) => {
         const task = await Task.create(req.body);
         res.status(200).json({
             success: true,
-            count: 1,
             data: task
         });
 
     }catch (error) {
+            // Handle duplicate email error
         if (error.code === 11000) {
-            return 
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Email already exists",
             });
         }
-        res.status(400).json({message: error.message});
+        res.status(400).json({
+            success: false,
+            message: error.message});
        
 
     }
@@ -33,7 +34,7 @@ router.post("/", async (req, res) => {
 router.get ("/", async (req, res) => {
     try {
         const  tasks =  await Task.find().populate("user", "name email"); 
-        res.json({
+        res.status(200).json({
             success: true,
             count: tasks.length,
             data: tasks,
@@ -41,7 +42,9 @@ router.get ("/", async (req, res) => {
 
     }catch (error) 
     {
-        res.status(400).json({message: error.message});
+        res.status(400).json({
+            success: false,
+            message: error.message});
 
     }
 });
@@ -52,21 +55,14 @@ router.delete("/:id" , async (req, res) => {
     try {
         const task = await Task.findByIdAndDelete(req.params.id);
 
-        if(!task) 
-        {
-            return res.status(400).json({
-                success: false,
-                message: "Task Not Found",
-            });
-        }
-        res.status(200).json({
-            success: true,
-            message: "Task Deleted Successfully",
-        });
+         res.status(200).json({
+      success: true,
+      message: "Task deleted successfully",
+    });
 
     } catch (error)
     {
-        res.status(400).json({
+        res.status(500).json({
             success: false,
             message: error.message
         });
