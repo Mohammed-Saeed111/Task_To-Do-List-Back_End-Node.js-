@@ -22,18 +22,13 @@ const taskSchema = new mongoose.Schema({
     },
     user: 
     {
-          // ده نوع خاص في MongoDB بيخزن الـ ID الخاص بدوكيومنت تاني
-
+          
         type: mongoose.Schema.Types.ObjectId,
-        // بيربط الحقل ده بموديل اسمه "User"
-        // وده بيسمحلي أستخدم populate عشان أجيب بيانات اليوزر المرتبط بالتاسك
         ref: "User",
     },
     createdAt:
     {
         type: Date,
-        // لو المستخدم مبعتش تاريخ
-       // MongoDB هتحط التاريخ والوقت الحالي تلقائيًا
         default: Date.now,
     }
 })
