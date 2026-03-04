@@ -9,12 +9,9 @@ const router = express.Router();
 
 router.post("/", createTask);
 
-
 router.get ("/", getAllTasks);
 
-
-
-router.delete("/:id" , deleteTask);
+router.delete("/:id", deleteTask);
 
 module.exports = router;
 
